@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fs = require("fs");
 const os = require("os");
-const fileLocation = os.homedir() + process.env.FILE_LOCATION + "OSInfo.txt";
+const fileLocation =  process.env.FILE_LOCATION + "OSInfo.txt";
 
 const writeFile = async () => {
   try {
