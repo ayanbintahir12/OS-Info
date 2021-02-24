@@ -1,7 +1,8 @@
 require("dotenv").config();
 const fs = require("fs");
+const { get } = require("http");
 const os = require("os");
-const fileLocation = process.example.FILE_LOCATION + "OSInfo.txt";
+const fileLocation = process.env.FILE_LOCATION + "OSInfo.txt";
 
 const writeFile = async () => {
   try {
@@ -19,7 +20,7 @@ const writeFile = async () => {
     throw console.log("Error: File not written successfully!" + err);
   }
 };
-const getFileData = (fileName) => {
+const getFileData = async (fileName) => {
   return new Promise((resolve, reject) => {
     fs.readFile(fileName, "utf8", (err, data) => {
       if (err) {
@@ -30,10 +31,17 @@ const getFileData = (fileName) => {
     });
   });
 };
+const fetchingFile = async () => {
+  try {
+    const data = await getFileData(fileLocation);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const start = async () => {
   const fileWritten = await writeFile();
 };
+
 start();
-getFileData(fileLocation)
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
+fetchingFile();
