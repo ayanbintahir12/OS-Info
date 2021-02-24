@@ -24,6 +24,7 @@ const getFileData = (fileName) => {
     fs.readFile(fileName,"utf8", (err, data) => {
       if (err) {
         reject(err);
+        return;
       }
       resolve(data);
     });
