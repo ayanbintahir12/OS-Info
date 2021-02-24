@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fs = require("fs");
 const os = require("os");
-const fileLocation =  process.env.FILE_LOCATION + "OSInfo.txt";
+const fileLocation = process.env.FILE_LOCATION + "OSInfo.txt";
 
 const writeFile = async () => {
   try {
@@ -14,14 +14,25 @@ const writeFile = async () => {
         "\n PC Arch: " +
         os.arch()
     );
+    console.log("File Saved Successfully!");
   } catch (err) {
-    throw console.log("Error: " + err);
+    throw console.log("Error: File not written successfully!" + err);
   }
 };
-
+const getFileData = (fileName) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(fileName,"utf8", (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
 const start = async () => {
   const fileWritten = await writeFile();
-  console.log("File Saved Successfully!");
 };
-
 start();
+getFileData(fileLocation)
+  .then((data) => console.log(data))
+  .catch((err) => console.log(err));
